@@ -15,11 +15,32 @@ include("bd_connection.php");
 	</head>
 	<body>
 		<form method="post" action="modify_account.php" id="modifyForm">
-			<input class="input is-success" type="password" placeholder="Modify password" name="modif_passwd">
-			<input class="input is-success" type="password" placeholder="Verify password" name="verif_passwd">
-			<input class="input is-success" type="text" placeholder="Modify email" name="verif_passwd">
-			<button type="submit" name="modify" class="button is-success is-light">Modify account</button>
-			<button type="sumit" name="supprimer" style="float: right;" class="button is-danger">Supprimer mon compte</button>
+		<div class="field">
+			<p class="control has-icons-left">
+				<input name="modif_passwd" class="input" type="password" placeholder="Password">
+				<span class="icon is-small is-left">
+					<i class="fas fa-lock"></i>
+				</span>
+			</p>
+		</div>
+		<div class="field">
+			<p class="control has-icons-left">
+				<input name="verif_passwd" class="input" type="password" placeholder="Verify password">
+				<span class="icon is-small is-left">
+					<i class="fas fa-lock"></i>
+				</span>
+			</p>
+		</div>
+		<div class="field">
+			<p class="control has-icons-left has-icons-right">
+				<input name="modif_email" class="input" type="email" placeholder="Email">
+				<span class="icon is-small is-left">
+					<i class="fas fa-envelope"></i>
+				</span>
+			</p>
+		</div>
+		<button type="submit" name="modify" class="button is-success is-light">Modify account</button>
+		<button onclick="return confirm('Are you sure?')" type="sumit" name="delete" style="float: right;" class="button is-danger">Delete account</button>
 		</form>
 	</body>
 </html>
@@ -52,13 +73,14 @@ if (isset($_POST['modify']))
 		$req->execute(array('email' => $email,'sess_login' => $sess_login));
 	}
 }
-if (isset($_POST['supprimer']))
+if (isset($_POST['delete']))
 {
 	$sess_id = $_SESSION['id'];
 	$req = $bdd->prepare("DELETE FROM `users`WHERE `id`=:sess_id");
 	$req->execute(array('sess_id' => $sess_id));
 	$_SESSION['login'] = "";
 	$_SESSION['id'] = "";
+	$_SESSION['token'] = "";
 	header("Location: index.php");
 }
 ?>

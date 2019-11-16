@@ -1,12 +1,18 @@
 <?php
 session_start();
-// include("bd_connection.php");
-// if ($_SESSION['login']!== "")
-// {
-// 	$is_admin = "SELECT admin_id FROM client WHERE '$_SESSION[login]' = login";
-// 	$result = $conn->query($is_admin);
-// 	$row = $result->fetch_assoc();
-// }
+$id = $_SESSION['id'];
+try
+{
+	$bdd = new PDO('mysql:host=localhost;dbname=camagru;charset=utf8', 'root', 'rootroot');
+	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch (Exception $e)
+{
+	die('Erreur : ' . $e->getMessage());
+}
+$req = $bdd->prepare('SELECT active FROM users WHERE id = ?');
+$req->execute(array($id));
+$active = $req->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,8 +41,11 @@ session_start();
 		}
 		else
 		{
-
 			echo "<p style=\"color: blanchedalmond;;\">Hello " . $_SESSION['login'] . "</br></br></p>";
+			if ($active['active'] != 1)
+			{
+				echo "Your account is not verified yet, please check your mail";
+			}
 			echo "<a href=\"logout.php\" style=\"
 			float: right; margin-right: 2vw;\">Logout</a><br>";
 			echo "<a href=\"modify_account.php\" style=\"

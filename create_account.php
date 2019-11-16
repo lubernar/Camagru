@@ -1,4 +1,5 @@
 <?php
+session_start();
 function create_account()
 {
 	$login = $_POST["login"];
@@ -6,7 +7,8 @@ function create_account()
 	$nom = $_POST["nom"];
 	$prenom = $_POST["prenom"];
 	$email = $_POST["email"];
-	$verifPassword = $_POST["verifPasswd"];
+	$verifPassword = $_POST["verifpasswd"];
+	$token = md5(microtime(TRUE)*100000);
 	if (isset($_POST['create']))
 	{
 		if (!$login === "" || $passwd === "" || $verifPassword === "")
@@ -29,16 +31,21 @@ function create_account()
 		{
 			die('Erreur : ' . $e->getMessage());
 		}
-		$req = $bdd->prepare('INSERT INTO users (login, password, email) VALUES (:login, :passwd, :email)');
-		$req->execute(array('login' => $login, 'passwd' => $passwd, 'email' => $email));
-		send_email($email);
+		$req = $bdd->prepare('INSERT INTO users (login, password, email, token) VALUES (:login, :passwd, :email, :token)');
+		$req->execute(array('login' => $login, 'passwd' => $passwd, 'email' => $email, 'token' => $token));
+		send_email($email, $login, $token);
 		header("Location: http://127.0.0.1:8080");
 	}
 }
-function send_email($email)
+function send_email($email, $login, $token)
 {
 	$subject = "Camagru account verification";
-	$message = "Please follow this link to activate your account.";
+	$message = 'Please follow this link to activate your account.
+	http://localhost:8080/activation.php?log='.urlencode($login).'&token='.urlencode($token).'
+
+
+	---------------
+	This is an automatic mail, please do not answer it.';
 	mail($email,$subject,$message);
 }
 
@@ -59,14 +66,35 @@ if (isset($_POST['create']))
 		</div>
 		<div class="create_account_form">
 			<form method="post" action="create_account.php" id="createForm">
-				Email:<br>
-				<input type="text" name="email"><br>
-				Login:<br>
-				<input type="text" name="login"><br>
-				Password:<br>
-				<input type="password" name="passwd"><br>
-				Verify password:<br>
-				<input type="password" name="verifPasswd"><br>
+			<div class="field">
+			<p class="control has-icons-left has-icons-right">
+				<input name="email" class="input" type="email" placeholder="Email">
+				<span class="icon is-small is-left">
+					<i class="fas fa-envelope"></i>
+				</span>
+			</p>
+		</div>
+		<div class="field">
+			<p class="control has-icons-left has-icons-right">
+				<input name="login" class="input" placeholder="Login">
+			</p>
+		</div>
+		<div class="field">
+			<p class="control has-icons-left">
+				<input name="passwd" class="input" type="password" placeholder="Password">
+				<span class="icon is-small is-left">
+					<i class="fas fa-lock"></i>
+				</span>
+			</p>
+		</div>
+		<div class="field">
+			<p class="control has-icons-left">
+				<input name="verifpasswd" class="input" type="password" placeholder="Verify password">
+				<span class="icon is-small is-left">
+					<i class="fas fa-lock"></i>
+				</span>
+			</p>
+		</div>
 				<input type="submit" value="Create account" name="create">
 			</form>
 	</div>
