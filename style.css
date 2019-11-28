@@ -1,0 +1,33 @@
+.header{
+background-color: grey;
+position: absolute;
+width: 100%;
+}
+.headerC{
+	background-color: grey;
+	width: 100%;
+	height: 10vw;
+}
+.headerC a {
+	text-decoration: none;
+}
+.headerC h1{
+text-align: center;
+color: blanchedalmond;
+font-size: 5vw;
+}
+.header a {
+	text-decoration: none;
+}
+.header h1{
+text-align: center;
+color: blanchedalmond;
+font-size: 5vw;
+}
+.loginForm{
+position: relative;
+float: right;
+}
+.createAccount {
+font-size: 1vw;
+}
