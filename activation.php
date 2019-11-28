@@ -23,8 +23,6 @@ if ($active == '1')
 }
 else
 {
-	// echo $token . "\n";
-	// echo $tokenbdd;
 	if ($token == $tokenbdd)
 	{
 		echo "Your account has been successfully activated !";

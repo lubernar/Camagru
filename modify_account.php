@@ -14,6 +14,8 @@ include("bd_connection.php");
 		</div>
 	</head>
 	<body>
+	<section class="section">
+    <div class="container">
 		<form method="post" action="modify_account.php" id="modifyForm">
 		<div class="field">
 			<p class="control has-icons-left">
@@ -42,6 +44,8 @@ include("bd_connection.php");
 		<button type="submit" name="modify" class="button is-success is-light">Modify account</button>
 		<button onclick="return confirm('Are you sure?')" type="sumit" name="delete" style="float: right;" class="button is-danger">Delete account</button>
 		</form>
+		</div>
+	</section>
 	</body>
 </html>
 <?php

@@ -64,6 +64,8 @@ if (isset($_POST['create']))
 		<div class="headerC">
 		<a href="index.php"><h1>Camagru</h1></a>
 		</div>
+		<section class="section">
+		<div class="container">
 		<div class="create_account_form">
 			<form method="post" action="create_account.php" id="createForm">
 			<div class="field">
@@ -77,6 +79,9 @@ if (isset($_POST['create']))
 		<div class="field">
 			<p class="control has-icons-left has-icons-right">
 				<input name="login" class="input" placeholder="Login">
+				<span class="icon is-small is-left">
+				 <i class="fas fa-user"></i>
+				</span>
 			</p>
 		</div>
 		<div class="field">
@@ -95,8 +100,10 @@ if (isset($_POST['create']))
 				</span>
 			</p>
 		</div>
-				<input type="submit" value="Create account" name="create">
+				<button type="submit" name="create" class="button is-success">Create</button>
 			</form>
 	</div>
+	</div>
+	</section>
 	</body>
 </html>
