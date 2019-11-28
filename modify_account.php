@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("navbar.php");
 include("bd_connection.php");
 ?>
 <!DOCTYPE html>
@@ -9,9 +9,6 @@ include("bd_connection.php");
   		<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 		<link rel="stylesheet" href="style.css">
 		<title>Modify account</title>
-		<div class="headerC">
-		<a href="index.php"><h1>Camagru</h1></a>
-		</div>
 	</head>
 	<body>
 	<section class="section">

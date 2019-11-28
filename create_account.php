@@ -1,5 +1,6 @@
 <?php
-session_start();
+include("navbar.php");
+// session_start();
 function create_account()
 {
 	$login = $_POST["login"];
@@ -61,9 +62,6 @@ if (isset($_POST['create']))
 		<title>Create account</title>
 	</head>
 	<body>
-		<div class="headerC">
-		<a href="index.php"><h1>Camagru</h1></a>
-		</div>
 		<section class="section">
 		<div class="container">
 		<div class="create_account_form">

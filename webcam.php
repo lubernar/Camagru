@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<title>HTML5 Camera</title>
+	<title>My gallery</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
   	<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 	<link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=yes">
-	<div class="headerC">
-		<a href="index.php"><h1>Camagru</h1></a>
-	</div>
-
+<?php include("navbar.php");?>
 </head>
 
 <body>
 	<div class="section">
 		<div class="container">
+			<center><h1 style="font-size:2vw";>My gallery</h1></center>
 			<video id="sourcevid" height='400' width='400' autoplay="true" style='display:inline'></video>
 			<div id="main" style='height:600px;width:600px;margin:auto;display:inline'>
+			<button onclick='clone()' class="button is-info">Take picture</button>
+			<button id="save" class="button is-success">Save</button>
 				<canvas id="cvs" height='600px' width='600px'></canvas>
 			</div>
-			<button onclick='clone()' style='height:50px;width:80px;margin:auto'>Take picture</button>
-<button id="save" style='height:50px;width:80px;margin:auto'>Save</button>
+
 <?php
 session_start();
 $id = $_SESSION['id'];
@@ -64,10 +63,8 @@ foreach($content as $row)
 				</div>
 			</div>';
 	}
-
 }
 ?>
-
 </div>
 </div>
 </body>
@@ -100,7 +97,6 @@ foreach($content as $row)
 	}
 	console.log(document.getElementById('save'));
 		$("#save").on('click', () => {
-			console.log("TEST");
 		var base64=document.getElementById('cvs').toDataURL("image/png");	//l'image au format base 64
 		$.ajax(
 		{
