@@ -1,8 +1,10 @@
 <?php
-session_start();
+if (session_status() != PHP_SESSION_ACTIVE)
+	session_start();
 echo "You need to be logged in to like a photo.";
 $pictures_id = $_GET['id'];
 $user_id = $_SESSION['id'];
+$liked = 0;
 if ($user_id !== "")
 {
 	try
@@ -18,7 +20,12 @@ if ($user_id !== "")
 	$req2 = $bdd->prepare('SELECT user_id, pictures_id, liked FROM pictures_liked WHERE user_id = :id');
 	$req2->execute(array('id' => $user_id));
 	$content = $req2->fetchAll(PDO::FETCH_ASSOC);
-	if ($content[0]['user_id'] == $user_id && $content[0]['pictures_id'] == $pictures_id && $content[0]['liked'] == 1)
+	foreach ($content as $row)
+	{
+		if ($row['user_id'] == $user_id && $row['pictures_id'] == $pictures_id)
+			$liked = 1;
+	}
+	if ($liked == 1)
 	{
 		$req = $bdd->prepare('DELETE FROM pictures_liked WHERE pictures_id = :id');
 		$req->execute(array('id' => $pictures_id));
@@ -32,7 +39,7 @@ if ($user_id !== "")
 		$req->execute(array('user_id' => $user_id, 'pictures_id' => $pictures_id, 'liked' => 1));
 		$req3 = $bdd->prepare('UPDATE pictures SET `likes`= likes + 1 WHERE `id`=:id_pic');
 		$req3->execute(array('id_pic' => $pictures_id));
-		header("Location: index.php?like=1");
+		header("Location: index.php?");
 	}
 }
 ?>

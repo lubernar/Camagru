@@ -4,6 +4,7 @@ $user_id = $_SESSION['id'];
 $content = $_POST['content'];
 if (!array_key_exists('content', $_POST))
 	return ;
+	echo $content;
 if (empty($content))
 	return ;
 try

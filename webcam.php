@@ -16,13 +16,12 @@
 			<center><h1 style="font-size:2vw";>My gallery</h1></center>
 			<video id="sourcevid" height='400' width='400' autoplay="true" style='display:inline'></video>
 			<div id="main" style='height:600px;width:600px;margin:auto;display:inline'>
-			<button onclick='clone()' class="button is-info">Take picture</button>
+			<button onclick='clone()' id="picture_button"class="button is-info">Take picture</button>
 			<button id="save" class="button is-success">Save</button>
-				<canvas id="cvs" height='600px' width='600px'></canvas>
+				<canvas value="" id="cvs" height='600px' width='600px'></canvas>
 			</div>
 
 <?php
-session_start();
 $id = $_SESSION['id'];
 try
 {
@@ -63,6 +62,7 @@ foreach($content as $row)
 				</div>
 			</div>';
 	}
+	echo '</div>';
 }
 ?>
 </div>
@@ -73,9 +73,7 @@ foreach($content as $row)
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
 	<script type="text/javascript">
-
 	function init() {
-
 		navigator.mediaDevices.getUserMedia({ audio: false, video: { width: 800, height: 600 } }).then(function(mediaStream) {
 
 			var video = document.getElementById('sourcevid');
@@ -88,22 +86,25 @@ foreach($content as $row)
 		}).catch(function(err) { console.log(err.name + ": " + err.message); });
 
 	}
-
 	function clone()
 	{
 		var vivi = document.getElementById('sourcevid');
 		var canvas1 = document.getElementById('cvs').getContext('2d');
 		canvas1.drawImage(vivi, 0,0, 600, 480);
+		$("#cvs").val('1');
 	}
-	console.log(document.getElementById('save'));
+
 		$("#save").on('click', () => {
 		var base64=document.getElementById('cvs').toDataURL("image/png");	//l'image au format base 64
-		$.ajax(
+		if ($("#cvs").val() == "1")
 		{
-			url : '/upload_pictures.php',
-			type : 'POST',
-			data : {'content' : base64}
-		}).then(() => { document.location.reload(); });
+			$.ajax(
+			{
+				url : '/upload_pictures.php',
+				type : 'POST',
+				data : {'content' : base64}
+			}).then(() => {document.location.reload() ; });
+			}
 	});
 
 	window.onload = init;

@@ -1,6 +1,5 @@
 <?php
 include("navbar.php");
-include("bd_connection.php");
 ?>
 <!DOCTYPE html>
 <html>

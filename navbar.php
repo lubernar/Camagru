@@ -1,4 +1,5 @@
 <?php
+if (session_status() != PHP_SESSION_ACTIVE)
 session_start();
 $id = $_SESSION['id'];
 try
@@ -14,7 +15,7 @@ $req = $bdd->prepare('SELECT active FROM users WHERE id = ?');
 $req->execute(array($id));
 $active = $req->fetch(PDO::FETCH_ASSOC);
 ?>
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="https://bulma.io">
     </a>
@@ -63,18 +64,18 @@ $active = $req->fetch(PDO::FETCH_ASSOC);
 	{
 			if ($active['active'] != 1)
 			{
-				echo "<p style=\"color: red;\"> Your account is not verified yet, please check your mail </p>";
+				echo "<p style=\"color: #7FFFD4;\"> Your account is not verified yet, please check your mail </p>";
 			}
 			echo '
 		<div class="navbar-end">
 			<div class="navbar-item">
 				<div class="buttons">
-					<a href="logout.php" class="button is-primary">
-						<strong>Logout</strong>
-					</a>
-					<a href="modify_account.php" class="button is-light">
-						Modify account
-					</a>
+				<a href="modify_account.php" class="button is-light">
+				Modify account
+				</a>
+				<a href="logout.php" class="button is-primary">
+					<strong>Logout</strong>
+				</a>
 				</div>
 			</div>
 		</div>';

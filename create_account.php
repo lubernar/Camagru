@@ -1,6 +1,7 @@
 <?php
 include("navbar.php");
-// session_start();
+if (session_status() != PHP_SESSION_ACTIVE)
+	session_start();
 function create_account()
 {
 	$login = $_POST["login"];
